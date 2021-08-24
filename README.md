@@ -1,20 +1,18 @@
 # Spark Aggregation Framework
 
-This is an Apache Spark based data aggregation framework to aggregate data at hourly and daily levels. 
-The framework is designed to run on Databricks clusters as jar.
-The framework reads necessary configuratons from application.conf file which is passed as an argument.
+This is a SQL driven Apache Spark based data aggregation framework to aggregate data at hourly and daily levels. The actual aggregation logic is contained within a SQL file which can be passed to this framework as parameter. The framework is designed to run on Databricks clusters as jar. The framework reads necessary configuratons from application.conf file which is passed as an argument.
 
 The framework supports follwing operation modes
-	- `delta` = the aggregation is resume from last aggregated partition.
-	- `adhoc` = the aggregation is performed on the specified date and hours.
+- `delta` = the aggregation is resume from last aggregated partition.
+- `adhoc` = the aggregation is performed on the specified date and hours.
 
 The framework supports follwing processing modes
-	- `singleStage` = the aggregation is performed through a single query without any intermediate data staging.
-	- `multiStage` = the aggregation is performed through multiple queries with any intermediate data staging.
+- `singleStage` = the aggregation is performed through a single query without any intermediate data staging.
+- `multiStage` = the aggregation is performed through multiple queries with any intermediate data staging.
 	
 The framework supports follwing aggregation modules
-	- `hourly` = the aggregation will be done at hourly level and aggregation boundary will contain date,start_hour,end_hour.
-	- `daily` = the aggregation will be done at daily level and aggregation boundary will contain date,start_hour,end_hour.
+- `hourly` = the aggregation will be done at hourly level and aggregation boundary will contain date,start_hour,end_hour.
+- `daily` = the aggregation will be done at daily level and aggregation boundary will contain date,start_hour,end_hour.
 
 The application.conf file must define the output `dailyPartitionName`. If config file contains `hourlyPartitionName` then hourly partitions are created within daily partitions.
 
