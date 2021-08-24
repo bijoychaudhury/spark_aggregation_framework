@@ -1,0 +1,41 @@
+spark {
+  storageAccount.url = "abfss://root@{storageAccountName}.dfs.core.windows.net"
+  storageAccount.names = ["storageAccount1","storageAccount2"]
+  storageAccount.oauth2.enable = "true/false"
+  storageAccount.clientId = "service principal id"
+  storageAccount.tenantId = "tenant id"
+  storageAccount.secretScope = "secret scope registered in databricks workspace to access storage account"
+  storageAccount.secretKey = "secret key registered in databricks workspace to access storage account"
+
+  spark.master = "local"
+  spark.serializer = "org.apache.spark.serializer.KryoSerializer"
+  spark.logLevel = "INFO"
+  spark.outputFormat = "delta" # [delta,parquet]
+
+  app.aggSourceHome = "target location in adls or dbfs"
+  app.aggTargetDataFormat = "delta"
+  app.aggDate = "2021-08-19" # comma separated list of dates
+  app.aggStartHour = "00" # needed for hourly aggModule
+  app.aggEndHour = "23" # needed for hourly aggModule
+  app.aggLatency = 1
+  app.aggCatchupLimitDays = 3
+  app.aggModule = "daily" # [hourly,daily]
+  app.aggMode = "adhoc" # [delta,adhoc]
+  app.aggProcessingType = "singleStage" # [singleStage,multiStage]
+  app.dailyPartitionName = "local_date_part"
+  app.hourlyPartitionName = "secondary partition"
+  app.aggSourceDataFormat = "delta"
+  app.aggOutDataPaths =  "comma separated list of data paths. First element should be source location. Subsequent locations should be temp paths used during multiStage processing"
+  app.aggQueryAliases =  "comma separated list of table aliases. First element should be for source table. Subsequent aliases should be for the respective position data path"
+  app.aggQueryPaths =  "comma separated list of transformation queries. First query should use source date. Subsequent queries should use respective position data aliases"
+  app.queryDatePartToken = "filter pattern used to replace partition1 value at runtime"
+  app.queryHourPartStartToken = filter pattern used to replace partition2 starting value at runtime"
+  app.queryHourPartEndToken = "filter pattern used to replace partition2 ending value at runtime"
+
+  app.aggDropTempDataEnable = "false"
+  app.aggEnrichmentEnable = "false"
+  app.enrichmentDataPaths = "comma separated list of enrichment data paths"
+  app.enrichmentDataFormats = "comma separated list of enrichment data formats with same sequence as enrichmentDataPaths"
+  app.enrichmentDataAliases = "comma separated list of enrichment data aliases with same sequence as enrichmentDataPaths"
+}
+
